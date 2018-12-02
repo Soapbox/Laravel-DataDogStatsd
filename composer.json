@@ -1,0 +1,36 @@
+{
+    "name": "jshayes/laravel-datadogstatsd",
+    "type": "library",
+    "description": "A Laravel library for DataDog Statsd",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Justin Hayes"
+        }
+    ],
+    "require": {
+        "datadog/php-datadogstatsd": "^1.3",
+        "illuminate/support": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "JSHayes\\LaravelDataDogStatsd\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "JSHayes\\LaravelDataDogStatsd\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.4",
+        "orchestra/testbench": "^3.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JSHayes\\LaravelDataDogStatsd\\ServiceProvider"
+            ]
+        }
+    }
+}
