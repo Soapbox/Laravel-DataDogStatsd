@@ -46,65 +46,70 @@ class DataDogFake extends DataDog
      * Assert that the given stat had timing information sent
      *
      * @param string $stat
-     * @param float $time
+     * @param float|null $time
      *
      * @return \JSHayes\LaravelDataDogStatsd\Testing\StatsAssertion
      */
-    public function assertTimingWasSent(string $stat, float $time): StatsAssertion
+    public function assertTimingWasSent(string $stat, float $time = null): StatsAssertion
     {
-        return $this->makeAssertion($stat)->withValue("$time|ms");
+        $assertion = $this->makeAssertion($stat);
+        return is_null($time) ? $assertion : $assertion->withValue("$time|ms");
     }
 
     /**
      * Assert that the given stat had gauge information sent
      *
      * @param string $stat
-     * @param float $value
+     * @param float|null $value
      *
      * @return \JSHayes\LaravelDataDogStatsd\Testing\StatsAssertion
      */
-    public function assertGaugeWasSent(string $stat, float $value): StatsAssertion
+    public function assertGaugeWasSent(string $stat, float $value = null): StatsAssertion
     {
-        return $this->makeAssertion($stat)->withValue("$value|g");
+        $assertion = $this->makeAssertion($stat);
+        return is_null($value) ? $assertion : $assertion->withValue("$value|g");
     }
 
     /**
      * Assert that the given stat had histogram information sent
      *
      * @param string $stat
-     * @param float $value
+     * @param float|null $value
      *
      * @return \JSHayes\LaravelDataDogStatsd\Testing\StatsAssertion
      */
-    public function assertHistogramWasSent(string $stat, float $value): StatsAssertion
+    public function assertHistogramWasSent(string $stat, float $value = null): StatsAssertion
     {
-        return $this->makeAssertion($stat)->withValue("$value|h");
+        $assertion = $this->makeAssertion($stat);
+        return is_null($value) ? $assertion : $assertion->withValue("$value|h");
     }
 
     /**
      * Assert that the given stat had distribution information sent
      *
      * @param string $stat
-     * @param float $value
+     * @param float|null $value
      *
      * @return \JSHayes\LaravelDataDogStatsd\Testing\StatsAssertion
      */
-    public function assertDistributionWasSent(string $stat, float $value): StatsAssertion
+    public function assertDistributionWasSent(string $stat, float $value = null): StatsAssertion
     {
-        return $this->makeAssertion($stat)->withValue("$value|d");
+        $assertion = $this->makeAssertion($stat);
+        return is_null($value) ? $assertion : $assertion->withValue("$value|d");
     }
 
     /**
      * Assert that the given stat had set information sent
      *
      * @param string $stat
-     * @param float $value
+     * @param float|null $value
      *
      * @return \JSHayes\LaravelDataDogStatsd\Testing\StatsAssertion
      */
-    public function assertSetWasSent(string $stat, float $value): StatsAssertion
+    public function assertSetWasSent(string $stat, float $value = null): StatsAssertion
     {
-        return $this->makeAssertion($stat)->withValue("$value|s");
+        $assertion = $this->makeAssertion($stat);
+        return is_null($value) ? $assertion : $assertion->withValue("$value|s");
     }
 
     /**
@@ -117,7 +122,7 @@ class DataDogFake extends DataDog
      */
     public function assertStatWasIncremented(string $stat, int $value = 1): StatsAssertion
     {
-        return $this->makeAssertion($stat)->withValue("$value|c");
+        return $this->assertStatWasUpdated($stat, $value);
     }
 
     /**
@@ -130,19 +135,20 @@ class DataDogFake extends DataDog
      */
     public function assertStatWasDecremented(string $stat, int $value = -1): StatsAssertion
     {
-        return $this->makeAssertion($stat)->withValue("$value|c");
+        return $this->assertStatWasUpdated($stat, $value);
     }
 
     /**
      * Assert that the given stat was updated by the given value
      *
      * @param string $stat
-     * @param int $value
+     * @param int|null $value
      *
      * @return \JSHayes\LaravelDataDogStatsd\Testing\StatsAssertion
      */
-    public function assertStatWasUpdated(string $stat, int $value): StatsAssertion
+    public function assertStatWasUpdated(string $stat, int $value = null): StatsAssertion
     {
-        return $this->makeAssertion($stat)->withValue("$value|c");
+        $assertion = $this->makeAssertion($stat);
+        return is_null($value) ? $assertion : $assertion->withValue("$value|c");
     }
 }

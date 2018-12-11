@@ -35,6 +35,7 @@ class DataDogFakeTest extends TestCase
         $fake->timing('stat', 1.0);
 
         $fake->assertTimingWasSent('stat', 1.0);
+        $fake->assertTimingWasSent('stat');
         try {
             $fake->assertTimingWasSent('other', 1.0);
         } catch (AssertionFailedError $e) {
@@ -53,6 +54,7 @@ class DataDogFakeTest extends TestCase
         $fake->timing('stat', 1.0);
 
         $fake->assertTimingWasSent('stat', 1.0);
+        $fake->assertTimingWasSent('stat');
         try {
             $fake->assertTimingWasSent('stat', 2.0);
         } catch (AssertionFailedError $e) {
@@ -71,6 +73,7 @@ class DataDogFakeTest extends TestCase
         $fake->gauge('stat', 1.0);
 
         $fake->assertGaugeWasSent('stat', 1.0);
+        $fake->assertGaugeWasSent('stat');
         try {
             $fake->assertGaugeWasSent('other', 1.0);
         } catch (AssertionFailedError $e) {
@@ -89,6 +92,7 @@ class DataDogFakeTest extends TestCase
         $fake->gauge('stat', 1.0);
 
         $fake->assertGaugeWasSent('stat', 1.0);
+        $fake->assertGaugeWasSent('stat');
         try {
             $fake->assertGaugeWasSent('stat', 2.0);
         } catch (AssertionFailedError $e) {
@@ -107,6 +111,7 @@ class DataDogFakeTest extends TestCase
         $fake->histogram('stat', 1.0);
 
         $fake->assertHistogramWasSent('stat', 1.0);
+        $fake->assertHistogramWasSent('stat');
         try {
             $fake->assertHistogramWasSent('other', 1.0);
         } catch (AssertionFailedError $e) {
@@ -125,6 +130,7 @@ class DataDogFakeTest extends TestCase
         $fake->histogram('stat', 1.0);
 
         $fake->assertHistogramWasSent('stat', 1.0);
+        $fake->assertHistogramWasSent('stat');
         try {
             $fake->assertHistogramWasSent('stat', 2.0);
         } catch (AssertionFailedError $e) {
@@ -143,6 +149,7 @@ class DataDogFakeTest extends TestCase
         $fake->distribution('stat', 1.0);
 
         $fake->assertDistributionWasSent('stat', 1.0);
+        $fake->assertDistributionWasSent('stat');
         try {
             $fake->assertDistributionWasSent('other', 1.0);
         } catch (AssertionFailedError $e) {
@@ -161,6 +168,7 @@ class DataDogFakeTest extends TestCase
         $fake->distribution('stat', 1.0);
 
         $fake->assertDistributionWasSent('stat', 1.0);
+        $fake->assertDistributionWasSent('stat');
         try {
             $fake->assertDistributionWasSent('stat', 2.0);
         } catch (AssertionFailedError $e) {
@@ -179,6 +187,7 @@ class DataDogFakeTest extends TestCase
         $fake->set('stat', 1.0);
 
         $fake->assertSetWasSent('stat', 1.0);
+        $fake->assertSetWasSent('stat');
         try {
             $fake->assertSetWasSent('other', 1.0);
         } catch (AssertionFailedError $e) {
@@ -197,6 +206,7 @@ class DataDogFakeTest extends TestCase
         $fake->set('stat', 1.0);
 
         $fake->assertSetWasSent('stat', 1.0);
+        $fake->assertSetWasSent('stat');
         try {
             $fake->assertSetWasSent('stat', 2.0);
         } catch (AssertionFailedError $e) {
@@ -287,6 +297,7 @@ class DataDogFakeTest extends TestCase
         $fake->updateStats('stat', 10);
 
         $fake->assertStatWasUpdated('stat', 10);
+        $fake->assertStatWasUpdated('stat');
         try {
             $fake->assertStatWasUpdated('other', 10);
         } catch (AssertionFailedError $e) {
@@ -305,6 +316,7 @@ class DataDogFakeTest extends TestCase
         $fake->updateStats('stat', 10);
 
         $fake->assertStatWasUpdated('stat', 10);
+        $fake->assertStatWasUpdated('stat');
         try {
             $fake->assertStatWasUpdated('stat', 1);
         } catch (AssertionFailedError $e) {
