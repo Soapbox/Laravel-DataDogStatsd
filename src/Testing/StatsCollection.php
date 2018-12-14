@@ -5,6 +5,7 @@ namespace JSHayes\LaravelDataDogStatsd\Testing;
 use Countable;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Arrayable;
+use JSHayes\LaravelDataDogStatsd\Helpers\TagNormalizer;
 
 class StatsCollection implements Countable, Arrayable
 {
@@ -40,7 +41,7 @@ class StatsCollection implements Countable, Arrayable
             'stat' => $stat,
             'value' => $value,
             'sample-rate' => $sampleRate,
-            'tags' => $tags,
+            'tags' => TagNormalizer::normalize($tags),
         ]);
         return $this;
     }
@@ -93,7 +94,7 @@ class StatsCollection implements Countable, Arrayable
      */
     public function filterByTags($tags): StatsCollection
     {
-        return $this->filterBy('tags', $tags);
+        return $this->filterBy('tags', TagNormalizer::normalize($tags));
     }
 
     /**

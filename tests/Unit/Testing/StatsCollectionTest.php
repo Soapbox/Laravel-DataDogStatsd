@@ -19,7 +19,7 @@ class StatsCollectionTest extends TestCase
 
         $this->assertEquals([
             ['stat' => 'stat1', 'value' => 'test', 'tags' => null, 'sample-rate' => 1.0],
-            ['stat' => 'stat2', 'value' => 'test', 'tags' => 'tags', 'sample-rate' => 1.0],
+            ['stat' => 'stat2', 'value' => 'test', 'tags' => ['tags' => null], 'sample-rate' => 1.0],
             ['stat' => 'stat3', 'value' => 'other', 'tags' => ['key' => 'value'], 'sample-rate' => 1.0],
         ], $collection->toArray());
     }
@@ -36,7 +36,7 @@ class StatsCollectionTest extends TestCase
 
         $this->assertEquals([
             ['stat' => 'stat', 'value' => 'test', 'tags' => null, 'sample-rate' => 1.0],
-            ['stat' => 'stat', 'value' => 'test', 'tags' => 'tags', 'sample-rate' => 1.0],
+            ['stat' => 'stat', 'value' => 'test', 'tags' => ['tags' => null], 'sample-rate' => 1.0],
             ['stat' => 'stat', 'value' => 'other', 'tags' => ['key' => 'value'], 'sample-rate' => 1.0],
         ], $collection->toArray());
     }
@@ -55,7 +55,7 @@ class StatsCollectionTest extends TestCase
 
         $this->assertEquals([
             ['stat' => 'stat1', 'value' => 'test', 'tags' => null, 'sample-rate' => 1.0],
-            ['stat' => 'stat1', 'value' => 'test', 'tags' => 'tags', 'sample-rate' => 1.0],
+            ['stat' => 'stat1', 'value' => 'test', 'tags' => ['tags' => null], 'sample-rate' => 1.0],
         ], $collection->toArray());
     }
 
@@ -73,7 +73,7 @@ class StatsCollectionTest extends TestCase
 
         $this->assertEquals([
             ['stat' => 'stat1', 'value' => 'test', 'tags' => null, 'sample-rate' => 1.0],
-            ['stat' => 'stat2', 'value' => 'test', 'tags' => 'tags', 'sample-rate' => 1.0],
+            ['stat' => 'stat2', 'value' => 'test', 'tags' => ['tags' => null], 'sample-rate' => 1.0],
         ], $collection->toArray());
     }
 
@@ -110,8 +110,8 @@ class StatsCollectionTest extends TestCase
         $collection = $collection->filterByTags('tags');
 
         $this->assertEquals([
-            ['stat' => 'stat2', 'value' => 'test', 'tags' => 'tags', 'sample-rate' => 1.0],
-            ['stat' => 'stat3', 'value' => 'another', 'tags' => 'tags', 'sample-rate' => 1.0],
+            ['stat' => 'stat2', 'value' => 'test', 'tags' => ['tags' => null], 'sample-rate' => 1.0],
+            ['stat' => 'stat3', 'value' => 'another', 'tags' => ['tags' => null], 'sample-rate' => 1.0],
         ], $collection->toArray());
     }
 
@@ -130,7 +130,28 @@ class StatsCollectionTest extends TestCase
         $collection = $collection->filterByStat('stat1')->filterByValue('test')->filterByTags('tags');
 
         $this->assertEquals([
-            ['stat' => 'stat1', 'value' => 'test', 'tags' => 'tags', 'sample-rate' => 1.0],
+            ['stat' => 'stat1', 'value' => 'test', 'tags' => ['tags' => null], 'sample-rate' => 1.0],
         ], $collection->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function filtering_by_tags_will_match_stats_that_have_the_same_normalized_tags()
+    {
+        $collection = new StatsCollection();
+        $collection->add('stat1', 'test', 1.0, 'tags')
+            ->add('stat2', 'other', 1.0, ['key' => 'value'])
+            ->add('stat3', 'another', 1.0, ['tags' => null]);
+
+        $this->assertEquals([
+            ['stat' => 'stat1', 'value' => 'test', 'tags' => ['tags' => null], 'sample-rate' => 1.0],
+            ['stat' => 'stat3', 'value' => 'another', 'tags' => ['tags' => null], 'sample-rate' => 1.0],
+        ], $collection->filterByTags('tags')->toArray());
+
+        $this->assertEquals([
+            ['stat' => 'stat1', 'value' => 'test', 'tags' => ['tags' => null], 'sample-rate' => 1.0],
+            ['stat' => 'stat3', 'value' => 'another', 'tags' => ['tags' => null], 'sample-rate' => 1.0],
+        ], $collection->filterByTags(['tags' => null])->toArray());
     }
 }
