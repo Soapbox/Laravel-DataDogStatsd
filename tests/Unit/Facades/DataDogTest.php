@@ -102,4 +102,28 @@ class DataDogTest extends TestCase
 
         DataDog::assertStatWasIncremented('stat')->withTags('tags')->withSampleRate(0.5);
     }
+
+    /**
+     * @test
+     */
+    public function it_can_fluently_append_tags()
+    {
+        DataDog::fake();
+
+        DataDog::stat('stat')
+            ->withTags('tag1')
+            ->withTags(['tag2' => null])
+            ->withTags('tag3,key4:tag4')
+            ->withTags(['key5' => 'tag5', 'key6' => 'tag6'])
+            ->increment();
+
+        DataDog::assertStatWasIncremented('stat')->withTags([
+            'tag1' => null,
+            'tag2' => null,
+            'tag3' => null,
+            'key4' => 'tag4',
+            'key5' => 'tag5',
+            'key6' => 'tag6',
+        ]);
+    }
 }

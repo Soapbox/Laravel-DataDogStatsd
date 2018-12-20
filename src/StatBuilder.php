@@ -3,6 +3,7 @@
 namespace JSHayes\LaravelDataDogStatsd;
 
 use DataDog\DogStatsd;
+use JSHayes\LaravelDataDogStatsd\Helpers\TagNormalizer;
 
 class StatBuilder
 {
@@ -32,7 +33,7 @@ class StatBuilder
      */
     public function withTags($tags): self
     {
-        $this->tags = $tags;
+        $this->tags = array_merge($this->tags ?? [], TagNormalizer::normalize($tags));
         return $this;
     }
 

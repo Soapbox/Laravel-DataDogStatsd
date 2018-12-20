@@ -153,7 +153,7 @@ class DataDogTest extends TestCase
         $dataDog->setStatsdInstance($spy = Mockery::spy(DogStatsd::class));
         $dataDog->stat('stat')->withSampleRate(0.5)->withTags('tags')->timing(10);
 
-        $spy->shouldHaveReceived('timing')->with('stat', 10, 0.5, 'tags');
+        $spy->shouldHaveReceived('timing')->with('stat', 10, 0.5, ['tags' => null]);
     }
 
     /**
@@ -165,7 +165,7 @@ class DataDogTest extends TestCase
         $dataDog->setStatsdInstance($spy = Mockery::spy(DogStatsd::class));
         $dataDog->stat('stat')->withSampleRate(0.5)->withTags('tags')->microtiming(10);
 
-        $spy->shouldHaveReceived('microtiming')->with('stat', 10, 0.5, 'tags');
+        $spy->shouldHaveReceived('microtiming')->with('stat', 10, 0.5, ['tags' => null]);
     }
 
     /**
@@ -177,7 +177,7 @@ class DataDogTest extends TestCase
         $dataDog->setStatsdInstance($spy = Mockery::spy(DogStatsd::class));
         $dataDog->stat('stat')->withSampleRate(0.5)->withTags('tags')->gauge(10);
 
-        $spy->shouldHaveReceived('gauge')->with('stat', 10, 0.5, 'tags');
+        $spy->shouldHaveReceived('gauge')->with('stat', 10, 0.5, ['tags' => null]);
     }
 
     /**
@@ -189,7 +189,7 @@ class DataDogTest extends TestCase
         $dataDog->setStatsdInstance($spy = Mockery::spy(DogStatsd::class));
         $dataDog->stat('stat')->withSampleRate(0.5)->withTags('tags')->histogram(10);
 
-        $spy->shouldHaveReceived('histogram')->with('stat', 10, 0.5, 'tags');
+        $spy->shouldHaveReceived('histogram')->with('stat', 10, 0.5, ['tags' => null]);
     }
 
     /**
@@ -201,7 +201,7 @@ class DataDogTest extends TestCase
         $dataDog->setStatsdInstance($spy = Mockery::spy(DogStatsd::class));
         $dataDog->stat('stat')->withSampleRate(0.5)->withTags('tags')->distribution(10);
 
-        $spy->shouldHaveReceived('distribution')->with('stat', 10, 0.5, 'tags');
+        $spy->shouldHaveReceived('distribution')->with('stat', 10, 0.5, ['tags' => null]);
     }
 
     /**
@@ -213,7 +213,7 @@ class DataDogTest extends TestCase
         $dataDog->setStatsdInstance($spy = Mockery::spy(DogStatsd::class));
         $dataDog->stat('stat')->withSampleRate(0.5)->withTags('tags')->set(10);
 
-        $spy->shouldHaveReceived('set')->with('stat', 10, 0.5, 'tags');
+        $spy->shouldHaveReceived('set')->with('stat', 10, 0.5, ['tags' => null]);
     }
 
     /**
@@ -226,8 +226,8 @@ class DataDogTest extends TestCase
         $dataDog->stat('stat')->withSampleRate(0.5)->withTags('tags')->increment();
         $dataDog->stat('stat')->withSampleRate(0.5)->withTags('tags')->increment(2);
 
-        $spy->shouldHaveReceived('increment')->with('stat', 0.5, 'tags', 1);
-        $spy->shouldHaveReceived('increment')->with('stat', 0.5, 'tags', 2);
+        $spy->shouldHaveReceived('increment')->with('stat', 0.5, ['tags' => null], 1);
+        $spy->shouldHaveReceived('increment')->with('stat', 0.5, ['tags' => null], 2);
     }
 
     /**
@@ -240,7 +240,7 @@ class DataDogTest extends TestCase
         $dataDog->stat('stat')->withSampleRate(0.5)->withTags('tags')->decrement();
         $dataDog->stat('stat')->withSampleRate(0.5)->withTags('tags')->decrement(-2);
 
-        $spy->shouldHaveReceived('decrement')->with('stat', 0.5, 'tags', -1);
-        $spy->shouldHaveReceived('decrement')->with('stat', 0.5, 'tags', -2);
+        $spy->shouldHaveReceived('decrement')->with('stat', 0.5, ['tags' => null], -1);
+        $spy->shouldHaveReceived('decrement')->with('stat', 0.5, ['tags' => null], -2);
     }
 }
